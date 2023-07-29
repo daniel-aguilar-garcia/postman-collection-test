@@ -26,37 +26,45 @@ jobs:
     - name: Realizar petición GET
       run: curl -o resultado.html http://localhost:52773/pull_and_run_tests
 
-    - name: Leer contenido del archivo resultado.html
-      id: read_file
+    - name: Codificar contenido del archivo resultado.html a Base64
+      id: encode_file
       run: |
-        content=$(cat resultado.html)
-        echo "::set-output name=content::$content"
+        base64 resultado.html > resultado_base64.txt
+        echo "::set-output name=base64content::$(cat resultado_base64.txt)"
 
-    - name: Enviar email
+    - name: Enviar email con curl
       run: |
-        API_KEY="ODRiYmFiOTcwOGNmZGNkYTliZGJhZGQ4ZjFkM2Y3Yzg6ZTZiMGZhMmZjMjA4NjIzMzFkOGRjMDBlOWYyZjUzYTk="
-        EMAIL_CONTENT=$(cat resultado.html | base64 -w 0)
-        curl --location 'https://api.mailjet.com/v3.1/send' \
-        --header 'Content-Type: application/json' \
-        --header "Authorization: Basic $API_KEY" \
-        --data-raw '{
-          "Messages":[
-            {
-              "From": {
-                "Email": "daniel@kesania.com",
-                "Name": "Github"
-              },
-              "To": [
-                {
+        curl -s \
+          -X POST \
+          --user "${{ secrets.MJ_APIKEY_PUBLIC }}:${{ secrets.MJ_APIKEY_PRIVATE }}" \
+          https://api.mailjet.com/v3.1/send \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "Messages": [
+              {
+                "From": {
                   "Email": "daniel@kesania.com",
-                  "Name": "receiver"
-                }
-              ],
-              "Subject": "Result test execution2",
-              "TextPart": "",
-              "HTMLPart": "'"$EMAIL_CONTENT"'"
-            }
-          ]
-        }'
+                  "Name": "GithubActions"
+                },
+                "To": [
+                  {
+                    "Email": "san@kesania.com",
+                    "Name": "You"
+                  }
+                ],
+                "Subject": "Result execution!",
+                "TextPart": "Report test execution",
+                "HTMLPart": "",
+                "Attachments": [
+                  {
+                    "ContentType": "text/plain",
+                    "Filename": "resultado.html",
+                    "Base64Content": "${{ steps.encode_file.outputs.base64content }}"
+                  }
+                ]
+              }
+            ]
+          }'
       env:
-        EMAIL_CONTENT: ${{ steps.read_file.outputs.content }}
+        MJ_APIKEY_PUBLIC: ${{ secrets.MJ_APIKEY_PUBLIC }}
+        MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
