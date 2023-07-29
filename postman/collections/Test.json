@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "7dbc55d1-9e52-4ee2-b391-069010c5848a",
+		"name": "Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "838575-7dbc55d1-9e52-4ee2-b391-069010c5848a"
+	},
+	"item": [
+		{
+			"name": "ExampleTest",
+			"item": [
+				{
+					"name": "test_ok",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "740c07ce-4b20-4ee8-8ca8-325fb18b650a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "b9cfe304-aab3-4d79-b43b-87bbc8c774a7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:52773/test_ok",
+							"host": [
+								"localhost"
+							],
+							"port": "52773",
+							"path": [
+								"test_ok"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test_ko",
+					"id": "6357f9ef-943c-4f1b-8657-023a2d47a50f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:52773/test_ko",
+							"host": [
+								"localhost"
+							],
+							"port": "52773",
+							"path": [
+								"test_ko"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "8820ef11-3529-49e6-8822-8cc932b86c69"
+		}
+	]
+}
