@@ -68,3 +68,15 @@ jobs:
       env:
         MJ_APIKEY_PUBLIC: ${{ secrets.MJ_APIKEY_PUBLIC }}
         MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
+        
+      
+    - name: Enviar archivo a Slack
+      uses: slack/github-action@3.6.0
+      with:
+        channel_id: 'CI/CD'
+        text: 'Aquí está el archivo resultado.html'
+        file_paths: 'resultado.html'
+        initial_comment: '¡Resultado HTML!'
+        title: 'Resultado HTML'
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
