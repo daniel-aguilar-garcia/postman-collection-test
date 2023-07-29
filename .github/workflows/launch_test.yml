@@ -100,10 +100,3 @@ jobs:
           ]
         }' "${{ secrets.CHAT_WEBHOOK }}"
         
-    
-    - name: Enviar contenido de resultado.html a Google Chat
-      run: |
-        webhook_url="${{ secrets.CHAT_WEBHOOK }}"
-        html_content="${{ steps.read_file.outputs.html_content }}"
-        json="{\"text\": \"$html_content\"}"
-        curl -X POST -H "Content-Type: application/json" -d "$json" "$webhook_url"
