@@ -53,7 +53,7 @@ jobs:
                   }
                 ],
                 "Subject": "Result execution!",
-                "TextPart": "Report test execution",
+                "TextPart": "Report test execution:",
                 "HTMLPart": "",
                 "Attachments": [
                   {
