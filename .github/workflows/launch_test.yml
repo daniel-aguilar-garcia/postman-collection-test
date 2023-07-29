@@ -1,4 +1,4 @@
-name: CI
+name: Envío de resultado por email
 
 on:
   push:
@@ -18,24 +18,45 @@ jobs:
 
     - name: Levantar Docker Compose
       run: docker-compose up -d
-      working-directory: ./irisapitester  # Asegúrate de actualizar la ruta correcta al directorio clonado
+      working-directory: ./irisapitester
 
     - name: Esperar a que Docker esté listo
-      run: sleep 30  # Esperar unos segundos para que Docker esté completamente levantado
+      run: sleep 30
 
     - name: Realizar petición GET
       run: curl -o resultado.html http://localhost:52773/pull_and_run_tests
-    
+
     - name: Leer contenido del archivo resultado.html
       id: read_file
       run: |
         content=$(cat resultado.html)
         echo "::set-output name=content::$content"
-    
-    - name: Enviar email 
-      uses: cinotify/github-action@main
-      with:
-        to: 'tetofe2962@wiemei.com'
-        subject: 'building main'
-        body: ${{ steps.read_file.outputs.content }}
 
+    - name: Enviar email
+      run: |
+        API_KEY="ODRiYmFiOTcwOGNmZGNkYTliZGJhZGQ4ZjFkM2Y3Yzg6ZTZiMGZhMmZjMjA4NjIzMzFkOGRjMDBlOWYyZjUzYTk="
+        EMAIL_CONTENT=$(cat resultado.html | base64 -w 0)
+        curl --location 'https://api.mailjet.com/v3.1/send' \
+        --header 'Content-Type: application/json' \
+        --header "Authorization: Basic $API_KEY" \
+        --data-raw '{
+          "Messages":[
+            {
+              "From": {
+                "Email": "daniel@kesania.com",
+                "Name": "Github"
+              },
+              "To": [
+                {
+                  "Email": "daniel@kesania.com",
+                  "Name": "receiver"
+                }
+              ],
+              "Subject": "Result test execution2",
+              "TextPart": "",
+              "HTMLPart": "'"$EMAIL_CONTENT"'"
+            }
+          ]
+        }'
+      env:
+        EMAIL_CONTENT: ${{ steps.read_file.outputs.content }}
