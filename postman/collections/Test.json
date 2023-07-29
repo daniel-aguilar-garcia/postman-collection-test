@@ -72,5 +72,29 @@
 			],
 			"id": "8820ef11-3529-49e6-8822-8cc932b86c69"
 		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "abfc410a-9d97-4295-b0a8-982c0760e588",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1d139748-15af-4810-8aa4-e0d761a794c8",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
 	]
 }
