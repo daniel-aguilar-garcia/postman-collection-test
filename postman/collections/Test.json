@@ -31,14 +31,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:52773/run/TestingExample.TestMethods/TestOK",
+							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestOK",
 							"host": [
 								"localhost"
 							],
 							"port": "52773",
 							"path": [
 								"run",
-								"TestingExample.TestMethods",
+								"IrisNewman.Example.TestMethods",
 								"TestOK"
 							]
 						}
@@ -55,14 +55,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:52773/run/TestingExample.TestMethods/TestKO",
+							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestKO",
 							"host": [
 								"localhost"
 							],
 							"port": "52773",
 							"path": [
 								"run",
-								"TestingExample.TestMethods",
+								"IrisNewman.Example.TestMethods",
 								"TestKO"
 							]
 						}
