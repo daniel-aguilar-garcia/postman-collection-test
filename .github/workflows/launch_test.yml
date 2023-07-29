@@ -70,10 +70,8 @@ jobs:
         MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
   
     - name: Enviar archivo a Google Chat
-      uses: google-github-actions/chat@v1
+      uses: appleboy/google-chat-notify-action@master
       with:
-        webhook_url: ${{ secrets.CHAT_WEBHOOK }}
-        filename: 'resultado.html'
-        file_content_base64: '${{ steps.encode_file.outputs.base64content }}'
-        text: 'Aquí está el archivo resultado.html'
-        thread_key: 'resultado'
+        webhook: ${{ secrets.CHAT_WEBHOOK }}
+        message: 'Aquí está el archivo resultado.html'
+        file: resultado.html
