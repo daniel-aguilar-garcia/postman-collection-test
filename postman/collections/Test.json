@@ -133,7 +133,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestAssertKO",
+							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/InsertPerson",
 							"host": [
 								"localhost"
 							],
@@ -141,7 +141,7 @@
 							"path": [
 								"run",
 								"IrisNewman.Example.TestMethods",
-								"TestAssertKO"
+								"InsertPerson"
 							]
 						}
 					},
@@ -157,7 +157,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestAssertKO",
+							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/DeletePerson",
 							"host": [
 								"localhost"
 							],
@@ -165,7 +165,7 @@
 							"path": [
 								"run",
 								"IrisNewman.Example.TestMethods",
-								"TestAssertKO"
+								"DeletePerson"
 							]
 						}
 					},
