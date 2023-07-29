@@ -1,4 +1,4 @@
-name: Envío de resultado por email
+name: Launch Tests
 
 on:
   push:
@@ -20,19 +20,19 @@ jobs:
       run: docker-compose up -d
       working-directory: ./irisapitester
 
-    - name: Esperar a que Docker esté listo
+    - name: Wait for Docker
       run: sleep 30
 
-    - name: Realizar petición GET
+    - name: Send test request
       run: curl -o resultado.html http://localhost:52773/pull_and_run_tests
 
-    - name: Codificar contenido del archivo resultado.html a Base64
+    - name: Encode file resultado.html in Base64
       id: encode_file
       run: |
         base64 resultado.html > resultado_base64.txt
         echo "::set-output name=base64content::$(cat resultado_base64.txt)"
 
-    - name: Enviar email con curl
+    - name: Send e-mail
       run: |
         curl -s \
           -X POST \
@@ -68,15 +68,3 @@ jobs:
       env:
         MJ_APIKEY_PUBLIC: ${{ secrets.MJ_APIKEY_PUBLIC }}
         MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
-        
-      
-    - name: Enviar archivo a Slack
-      uses: slack/github-action@3.6.0
-      with:
-        channel_id: 'CI/CD'
-        text: 'Aquí está el archivo resultado.html'
-        file_paths: 'resultado.html'
-        initial_comment: '¡Resultado HTML!'
-        title: 'Resultado HTML'
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
