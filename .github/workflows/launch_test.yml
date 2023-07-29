@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código fuente
+      uses: actions/checkout@v2
+
+    - name: Levantar Docker Compose
+      run: docker-compose up -d
+      working-directory: ./path/to/irisapitester  # Asegúrate de actualizar la ruta correcta al directorio del repositorio
+
+    - name: Esperar a que Docker esté listo
+      run: sleep 30  # Esperar unos segundos para que Docker esté completamente levantado
+
+    - name: Realizar petición GET
+      run: curl -o resultado.html http://localhost:52773/pull_and_run_tests
+
+    - name: Guardar resultado
+      run: mv resultado.html $GITHUB_WORKSPACE
