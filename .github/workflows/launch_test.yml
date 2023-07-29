@@ -25,4 +25,17 @@ jobs:
 
     - name: Realizar petición GET
       run: curl -o resultado.html http://localhost:52773/pull_and_run_tests
+    
+    - name: Leer contenido del archivo resultado.html
+      id: read_file
+      run: |
+        content=$(cat resultado.html)
+        echo "::set-output name=content::$content"
+    
+    - name: Enviar email 
+      uses: cinotify/github-action@main
+      with:
+        to: 'tetofe2962@wiemei.com'
+        subject: 'building main'
+        body: ${{ steps.read_file.outputs.content }}
 
