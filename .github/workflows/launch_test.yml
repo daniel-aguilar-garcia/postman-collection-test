@@ -72,12 +72,30 @@ jobs:
     - name: Enviar archivo a Google Chat
       run: |
         curl -X POST -H "Content-Type: application/json" -d '{
-          "text": "Aquí está el archivo resultado.html",
-          "attachments": [
+          "cards": [
             {
-              "title": "Resultado HTML",
-              "text": "Resultado HTML adjunto.",
-              "file": "data:application/octet-stream;base64,${{ steps.encode_file.outputs.base64content }}"
+              "sections": [
+                {
+                  "header": "Resultado HTML",
+                  "widgets": [
+                    {
+                      "textParagraph": {
+                        "text": "Resultado HTML adjunto."
+                      }
+                    }
+                  ]
+                }
+              ],
+              "cardActions": [
+                {
+                  "actionLabel": "Descargar Resultado",
+                  "onClick": {
+                    "openLink": {
+                      "url": "data:application/octet-stream;base64,${{ steps.encode_file.outputs.base64content }}"
+                    }
+                  }
+                }
+              ]
             }
           ]
         }' "${{ secrets.CHAT_WEBHOOK }}"
