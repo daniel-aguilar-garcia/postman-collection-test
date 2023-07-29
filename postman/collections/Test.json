@@ -103,7 +103,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestAssert",
+							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestAssertKO",
 							"host": [
 								"localhost"
 							],
@@ -111,7 +111,7 @@
 							"path": [
 								"run",
 								"IrisNewman.Example.TestMethods",
-								"TestAssert"
+								"TestAssertKO"
 							]
 						}
 					},
