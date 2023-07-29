@@ -13,9 +13,12 @@ jobs:
     - name: Checkout código fuente
       uses: actions/checkout@v2
 
+    - name: Clonar el repositorio irisapitester
+      run: git clone https://github.com/daniel-aguilar-garcia/irisapitester.git
+
     - name: Levantar Docker Compose
       run: docker-compose up -d
-      working-directory: ./path/to/irisapitester  # Asegúrate de actualizar la ruta correcta al directorio del repositorio
+      working-directory: ./irisapitester  # Asegúrate de actualizar la ruta correcta al directorio clonado
 
     - name: Esperar a que Docker esté listo
       run: sleep 30  # Esperar unos segundos para que Docker esté completamente levantado
