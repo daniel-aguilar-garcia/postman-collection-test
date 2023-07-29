@@ -25,6 +25,9 @@ jobs:
 
     - name: Realizar petición GET
       run: curl -o resultado.html http://localhost:52773/pull_and_run_tests
+      
+    - name: Eliminar archivo resultado.html si existe
+      run: rm -f resultado.html
 
     - name: Guardar resultado
       run: mv resultado.html $GITHUB_WORKSPACE
