@@ -31,47 +31,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:52773/test_ok",
+							"raw": "localhost:52773/run/TestingExample.TestMethods/TestOK",
 							"host": [
 								"localhost"
 							],
 							"port": "52773",
 							"path": [
-								"test_ok"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "test_ok Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "740c07ce-4b20-4ee8-8ca8-325fb18b650a",
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"id": "a6b2e2fc-de5d-437c-85b4-d2c0ecd9eb0c",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:52773/test_ok",
-							"host": [
-								"localhost"
-							],
-							"port": "52773",
-							"path": [
-								"test_ok"
+								"run",
+								"TestingExample.TestMethods",
+								"TestOK"
 							]
 						}
 					},
@@ -87,13 +55,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:52773/test_ko",
+							"raw": "localhost:52773/run/TestingExample.TestMethods/TestKO",
 							"host": [
 								"localhost"
 							],
 							"port": "52773",
 							"path": [
-								"test_ko"
+								"run",
+								"TestingExample.TestMethods",
+								"TestKO"
 							]
 						}
 					},
