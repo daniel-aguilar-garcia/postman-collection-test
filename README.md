@@ -1,2 +1,2 @@
 # postman-collection-test
-Test Postman collection repository .
+Test Postman collection repository ..
