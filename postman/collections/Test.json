@@ -68,6 +68,54 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "test_assert_ok",
+					"id": "a56b16f5-be55-421c-8d54-c9d39df3b007",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestAssert",
+							"host": [
+								"localhost"
+							],
+							"port": "52773",
+							"path": [
+								"run",
+								"IrisNewman.Example.TestMethods",
+								"TestAssert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test_assert_ko",
+					"id": "1863f643-ef37-4d6c-bb3a-551f3d1c56a7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:52773/run/IrisNewman.Example.TestMethods/TestAssert",
+							"host": [
+								"localhost"
+							],
+							"port": "52773",
+							"path": [
+								"run",
+								"IrisNewman.Example.TestMethods",
+								"TestAssert"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "8820ef11-3529-49e6-8822-8cc932b86c69"
