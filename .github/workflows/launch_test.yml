@@ -101,9 +101,9 @@ jobs:
         }' "${{ secrets.CHAT_WEBHOOK }}"
         
     
-    - name: Enviar archivo a Google Chat 2
+    - name: Enviar contenido de resultado.html a Google Chat
       run: |
         webhook_url="${{ secrets.CHAT_WEBHOOK }}"
-        file_content=$(base64 resultado.html -w 0)
-        json="{\"text\": \"Aquí está el archivo resultado.html\", \"cards\": [{\"sections\": [{\"widgets\": [{\"textParagraph\": {\"text\": \"Resultado HTML adjunto.\"}}]}], \"cardActions\": [{\"actionLabel\": \"Descargar Resultado\", \"onClick\": {\"openLink\": {\"url\": \"data:application/octet-stream;base64,$file_content\"}}}]}]}"
+        html_content="${{ steps.read_file.outputs.html_content }}"
+        json="{\"text\": \"$html_content\"}"
         curl -X POST -H "Content-Type: application/json" -d "$json" "$webhook_url"
