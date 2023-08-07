@@ -88,7 +88,7 @@ jobs:
               ],
               "cardActions": [
                 {
-                  "actionLabel": "Descargar Resultado",
+                  "actionLabel": "Descargar Resultado.",
                   "onClick": {
                     "openLink": {
                       "url": "data:application/octet-stream;base64,${{ steps.encode_file.outputs.base64content }}"
