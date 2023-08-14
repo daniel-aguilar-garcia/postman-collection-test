@@ -27,7 +27,7 @@ jobs:
       id: get_file_value
       run: |
         raw_file_value=$(curl -s http://localhost:52773/pull_run_and_file)
-        echo "file_value=$raw_file_value" >> $GITHUB_ENV
+        echo "file_value=$raw_file_value" >> "$GITHUB_OUTPUT"
 
     - name: Mostrar valor de 'file'
       run: echo "El valor de 'file' es $file_value"
