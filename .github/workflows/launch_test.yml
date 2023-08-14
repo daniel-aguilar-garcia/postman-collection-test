@@ -26,14 +26,15 @@ jobs:
     - name: Obtener valor de 'file'
       id: get_file_value
       run: |
-        raw_file_value=$(curl -s http://localhost:52773/pull_run_and_file | cat)
-        echo "file_value=$raw_file_value" >> $GITHUB_ENV
+        raw_file_value=$(curl -s http://localhost:52773/pull_run_and_file)
+        echo "::set-output name=file_value::$raw_file_value"
 
     - name: Mostrar valor de 'file'
-      run: echo "El valor de 'file' es $file_value"
+      run: echo "El valor de 'file' es ${{ steps.get_file_value.outputs.file_value }}"
 
     - name: Enviar archivo a Google Chat
       run: |
+        file_value="${{ steps.get_file_value.outputs.file_value }}"
         json_data="{
           \"cards\": [
             {
