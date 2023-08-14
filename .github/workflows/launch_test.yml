@@ -44,10 +44,10 @@ jobs:
                     {
                       \"keyValue\": {
                         \"topLabel\": \"Press to open the report file\",
-                        \"content\": \"<a href='http://localhost:52773/show_report/$file_value'>Abrir en el navegador</a>\",
+                        \"content\": \"<a href='localhost:52773/show_report/$file_value'>Open in browser</a>\",
                         \"onClick\": {
                           \"openLink\": {
-                            \"url\": \"http://localhost:52773/show_report/$file_value\"
+                            \"url\": \"localhost:52773/show_report/$file_value\"
                           }
                         }
                       }
