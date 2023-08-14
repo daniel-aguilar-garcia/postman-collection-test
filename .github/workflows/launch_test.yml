@@ -23,80 +23,40 @@ jobs:
     - name: Wait for Docker
       run: sleep 30
 
-    - name: Send test request
-      run: curl -o resultado.html http://localhost:52773/pull_and_run_tests
+    - name: Obtener valor de 'file'
+      id: get_file_value
+      run: echo "::set-output name=file::$(curl -s http://localhost:52773/pull_run_and_file | jq -r '.file')"
 
-    - name: Encode file resultado.html in Base64
-      id: encode_file
-      run: |
-        base64 resultado.html > resultado_base64.txt
-        echo "::set-output name=base64content::$(cat resultado_base64.txt)"
-
-    - name: Send e-mail
-      run: |
-        curl -s \
-          -X POST \
-          --user "${{ secrets.MJ_APIKEY_PUBLIC }}:${{ secrets.MJ_APIKEY_PRIVATE }}" \
-          https://api.mailjet.com/v3.1/send \
-          -H 'Content-Type: application/json' \
-          -d '{
-            "Messages": [
-              {
-                "From": {
-                  "Email": "daniel@kesania.com",
-                  "Name": "GithubActions"
-                },
-                "To": [
-                  {
-                    "Email": "san@kesania.com",
-                    "Name": "You"
-                  }
-                ],
-                "Subject": "Result execution!",
-                "TextPart": "Report test execution:",
-                "HTMLPart": "",
-                "Attachments": [
-                  {
-                    "ContentType": "text/plain",
-                    "Filename": "resultado.html",
-                    "Base64Content": "${{ steps.encode_file.outputs.base64content }}"
-                  }
-                ]
-              }
-            ]
-          }'
-      env:
-        MJ_APIKEY_PUBLIC: ${{ secrets.MJ_APIKEY_PUBLIC }}
-        MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
   
     - name: Enviar archivo a Google Chat
       run: |
-        curl -X POST -H "Content-Type: application/json" -d '{
-          "cards": [
+        file_value=$(echo "${{ steps.get_file_value.outputs.file }}")
+        json_data="{
+          \"cards\": [
             {
-              "sections": [
+              \"header\": {
+                \"title\": \"Execution Test Report\",
+                \"imageUrl\": \"https://example.com/imagen.png\"
+              },
+              \"sections\": [
                 {
-                  "header": "Resultado HTML",
-                  "widgets": [
+                  \"widgets\": [
                     {
-                      "textParagraph": {
-                        "text": "Resultado HTML adjunto."
+                      \"keyValue\": {
+                        \"topLabel\": \"Press to open the report file\",
+                        \"content\": \"<a href='http://localhost:52773/show_report/$file_value'>Abrir en el navegador</a>\",
+                        \"onClick\": {
+                          \"openLink\": {
+                            \"url\": \"http://localhost:52773/show_report/$file_value\"
+                          }
+                        }
                       }
                     }
                   ]
                 }
-              ],
-              "cardActions": [
-                {
-                  "actionLabel": "Descargar Resultado.",
-                  "onClick": {
-                    "openLink": {
-                      "url": "data:application/octet-stream;base64,${{ steps.encode_file.outputs.base64content }}"
-                    }
-                  }
-                }
               ]
             }
           ]
-        }' "${{ secrets.CHAT_WEBHOOK }}"
+        }"
+        curl -X POST -H "Content-Type: application/json" -d "$json_data" "${{ secrets.CHAT_WEBHOOK }}"
         
