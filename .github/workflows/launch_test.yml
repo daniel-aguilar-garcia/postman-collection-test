@@ -25,12 +25,15 @@ jobs:
 
     - name: Obtener valor de 'file'
       id: get_file_value
-      run: echo "::set-output name=file::$(curl -s http://localhost:52773/pull_run_and_file | jq -r '.file')"
+      run: |
+        echo "file_value=$(curl -s http://localhost:52773/pull_run_and_file | jq -r '.file')" >> $GITHUB_ENV
 
-  
+    - name: Mostrar valor de 'file'
+      run: echo "El valor de 'file' es $file_value"
+
     - name: Enviar archivo a Google Chat
       run: |
-        file_value=$(echo "${{ steps.get_file_value.outputs.file }}")
+        file_value=$file_value
         json_data="{
           \"cards\": [
             {
@@ -44,7 +47,7 @@ jobs:
                     {
                       \"keyValue\": {
                         \"topLabel\": \"Press to open the report file\",
-                        \"content\": \"<a href='localhost:52773/show_report/$file_value'>Open in browser</a>\",
+                        \"content\": \"<a href='localhost:52773/show_report/$file_value'>Abrir en el navegador</a>\",
                         \"onClick\": {
                           \"openLink\": {
                             \"url\": \"localhost:52773/show_report/$file_value\"
@@ -59,4 +62,3 @@ jobs:
           ]
         }"
         curl -X POST -H "Content-Type: application/json" -d "$json_data" "${{ secrets.CHAT_WEBHOOK }}"
-        
