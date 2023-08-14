@@ -26,14 +26,14 @@ jobs:
     - name: Obtener valor de 'file'
       id: get_file_value
       run: |
-        echo "file_value=$(curl -s http://localhost:52773/pull_run_and_file | jq -r '.file')" >> $GITHUB_ENV
+        raw_file_value=$(curl -s http://localhost:52773/pull_run_and_file | jq -r '.file')
+        echo "file_value=$raw_file_value" >> $GITHUB_ENV
 
     - name: Mostrar valor de 'file'
       run: echo "El valor de 'file' es $file_value"
 
     - name: Enviar archivo a Google Chat
       run: |
-        file_value=$file_value
         json_data="{
           \"cards\": [
             {
@@ -47,10 +47,10 @@ jobs:
                     {
                       \"keyValue\": {
                         \"topLabel\": \"Press to open the report file\",
-                        \"content\": \"<a href='localhost:52773/show_report/$file_value'>Abrir en el navegador</a>\",
+                        \"content\": \"<a href='http://localhost:52773/show_report/$file_value'>Abrir en el navegador</a>\",
                         \"onClick\": {
                           \"openLink\": {
-                            \"url\": \"localhost:52773/show_report/$file_value\"
+                            \"url\": \"http://localhost:52773/show_report/$file_value\"
                           }
                         }
                       }
