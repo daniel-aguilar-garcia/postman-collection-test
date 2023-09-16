@@ -26,4 +26,4 @@ jobs:
     - name: Send report to Google chat
       id: send_report_google
       run: |
-        $(curl -s http://localhost:52773/pull_run_and_send_google)
+        $(curl -s localhost:52773/pull_run_and_send_google)
